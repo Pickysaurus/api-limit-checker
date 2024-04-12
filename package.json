@@ -1,0 +1,26 @@
+{
+  "name": "api-limit-checker",
+  "version": "2.0.1",
+  "description": "A simple little utility to check how many API requests you have left and when they reset.",
+  "scripts": {
+    "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --progress --profile --color",
+    "bundle7z": "del game-elegos.7z && 7z a -t7z game-elegos.7z .\\dist\\*",
+    "build": "npm run webpack && extractInfo"
+  },
+  "author": "Pickysaurus",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "ts-loader": "^5.3.3",
+    "typescript": "^5.4.3",
+    "vortex-api": "Nexus-Mods/vortex-api",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@types/react": "^18.2.73",
+    "react": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "redux-act": "^1.8.0"
+  }
+}

@@ -100,6 +100,11 @@ export async function getLimits(api: types.IExtensionApi, token: string | undefi
 
           return result;
         }
+        else if (response.status === 401) {
+          // Unauthorised, this means the OAuth session has expired!
+          log('warn', 'Could not update API rate limits due to OAuth token having expired.');
+          return (api.getState().session as any).apiLimits;
+        }
         else throw new Error(`${response.status} - ${response.statusText ?? 'Unable to check API limits'}`);
     
       }

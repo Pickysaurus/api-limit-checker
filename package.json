@@ -1,6 +1,6 @@
 {
   "name": "api-limit-checker",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A simple little utility to check how many API requests you have left and when they reset.",
   "scripts": {
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --progress --profile --color",

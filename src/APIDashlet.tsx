@@ -60,11 +60,13 @@ export default function APIDashlet(props: IAPIDashletProps) {
 
     const remainingBar = (stats: { remaining: number, limit: number, resetAt: Date }) => (
         <div>
-            <h4 style={{margin: 0}} title={stats?.resetAt?.toLocaleDateString(lang, { hour: '2-digit', minute: '2-digit', hour12: false }) ?? 'Unknown'}>
+            <h4 style={{margin: 0}}>
                 Available Requests
             </h4>
             <Progress max={stats?.limit ?? 10000} min={0} now={stats?.remaining ?? 10000} />
-            <div>Resets {stats ? getRelativeTime(stats?.resetAt) : '???'}.</div>
+            <div title={stats.resetAt ? stats.resetAt.toLocaleDateString(lang, { hour: '2-digit', minute: '2-digit', hour12: false }) : 'Unknown'}>
+                Resets {stats ? getRelativeTime(stats?.resetAt) : '???'}.
+            </div>
         </div>
     );
 

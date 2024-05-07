@@ -1,6 +1,6 @@
 {
   "name": "api-limit-checker",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A simple little utility to check how many API requests you have left and when they reset.",
   "scripts": {
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --progress --profile --color",
@@ -10,7 +10,6 @@
   "author": "Pickysaurus",
   "license": "GPL-3.0",
   "devDependencies": {
-    "copyfiles": "^2.4.1",
     "ts-loader": "^5.3.3",
     "typescript": "^5.4.3",
     "vortex-api": "Nexus-Mods/vortex-api",

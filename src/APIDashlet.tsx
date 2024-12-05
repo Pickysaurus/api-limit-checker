@@ -12,11 +12,17 @@ interface IAPIDashletProps {
     t: (input: string) => string;
 }
 
+const dateOptions: Intl.DateTimeFormatOptions = {
+    hour: '2-digit', 
+    minute: '2-digit', 
+    hourCycle: 'h23'
+}
+
 export default function APIDashlet(props: IAPIDashletProps) {
     const { t } = props;
     const context = React.useContext(MainContext);
     const limits: IAPILimitResponse | null = useSelector((state: types.IState) => Object.keys((state.session as any).apiLimits).length ? (state.session as any).apiLimits : null);
-    const lang = useSelector((state: types.IState) => state.settings?.interface?.language ?? 'en');
+    const lang = useSelector((state: types.IState) => state.settings?.interface?.language ?? 'en-GB');
     const login = useSelector((state: types.IState) => (state.persistent as any).nexus?.userInfo ?? null);
     const token = useSelector((state: types.IState) => (state.confidential.account as any).nexus?.OAuthCredentials?.token ?? null);
     const [error, setError] = React.useState<Error>()
@@ -31,7 +37,7 @@ export default function APIDashlet(props: IAPIDashletProps) {
             setUpdateTime(new Date());
         }, 600000); 
 
-        // Do the inital update
+        // Do the initial update
         if (!limits && !error) {
             getLimits(context.api, token).catch(err => setError(err));
         }
@@ -64,7 +70,7 @@ export default function APIDashlet(props: IAPIDashletProps) {
                 Available Requests
             </h4>
             <Progress max={stats?.limit ?? 10000} min={0} now={stats?.remaining ?? 10000} />
-            <div title={(stats.resetAt as Date) ? stats.resetAt.toLocaleDateString(lang, { hour: '2-digit', minute: '2-digit', hour12: false }) : 'Unknown'}>
+            <div title={(stats.resetAt as Date) ? stats.resetAt.toLocaleDateString(lang, dateOptions) : 'Unknown'}>
                 Resets {stats ? getRelativeTime(stats?.resetAt) : '???'}.
             </div>
         </div>
@@ -80,7 +86,7 @@ export default function APIDashlet(props: IAPIDashletProps) {
         content = (
         <div style={{display: 'flex', flexDirection: 'row', backgroundColor: 'var(--brand-warning)', color: '#09090b',  borderRadius: '4px', fontWeight: 500, margin: 0, padding: '4px 8px', justifyContent: 'space-between', alignItems: 'center'}}>
             <p style={{margin: 0}}>
-                Daily limit reached. Reset <span title={limits.daily?.resetAt?.toLocaleDateString(lang, { hour: '2-digit', minute: '2-digit', hour12: false }) ?? 'Unknown'}>{limits.daily ? getRelativeTime(limits.daily.resetAt) : '???'}</span>.
+                Daily limit reached. Reset <span title={limits.daily?.resetAt?.toLocaleDateString(lang, dateOptions) ?? 'Unknown'}>{limits.daily ? getRelativeTime(limits.daily.resetAt) : '???'}</span>.
             </p>
             <a onClick={() => util.opn(helpUrl).catch((e: Error) => log('error', 'Error opening help page', e))} style={{backgroundColor: '#f4f4f5', color: '#09090b', padding: '2px 4px', borderRadius: '4px'}}>
                 More
@@ -92,7 +98,7 @@ export default function APIDashlet(props: IAPIDashletProps) {
         content = (
         <div style={{display: 'flex', flexDirection: 'row', backgroundColor: 'var(--brand-danger)', color: '#f4f4f5',  borderRadius: '4px', fontWeight: 500, margin: 0, padding: '4px 8px', justifyContent: 'space-between', alignItems: 'center'}}>
             <p style={{margin: 0}}>
-                No requests available. Full reset <span title={limits.daily?.resetAt?.toLocaleDateString(lang, { hour: '2-digit', minute: '2-digit', hour12: false }) ?? 'Unknown'}>{limits.daily ? getRelativeTime(limits.daily.resetAt) : '???'}</span>.
+                No requests available. Full reset <span title={limits.daily?.resetAt?.toLocaleDateString(lang, dateOptions) ?? 'Unknown'}>{limits.daily ? getRelativeTime(limits.daily.resetAt) : '???'}</span>.
             </p>
             <a onClick={() => util.opn(helpUrl).catch((e: Error) => log('error', 'Error opening help page', e))} style={{backgroundColor: '#f4f4f5', color: '#09090b', padding: '2px 4px', borderRadius: '4px'}}>
                 More

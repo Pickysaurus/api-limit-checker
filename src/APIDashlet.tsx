@@ -70,7 +70,7 @@ export default function APIDashlet(props: IAPIDashletProps) {
                 Available Requests
             </h4>
             <Progress max={stats?.limit ?? 10000} min={0} now={stats?.remaining ?? 10000} />
-            <div title={(stats.resetAt as Date) ? stats.resetAt.toLocaleDateString(lang, dateOptions) : 'Unknown'}>
+            <div title={stats.resetAt?.toLocaleDateString(lang, dateOptions) ?? 'Unknown'}>
                 Resets {stats ? getRelativeTime(stats?.resetAt) : '???'}.
             </div>
         </div>

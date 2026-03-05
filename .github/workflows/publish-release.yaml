@@ -94,7 +94,7 @@ jobs:
           api_key: ${{ secrets.NEXUSMODS_API_KEY }}
           file_id: ${{ vars.NEXUSMODS_FILE_ID }}
           game_domain_name:  ${{ vars.NEXUSMODS_GAME_DOMAIN }}
-          display_name: Import from Steam Workshop          
+          display_name: API Limit Checker          
           filename: ${{ needs.build.outputs.zip_name }}
           version: ${{ github.event.inputs.version || needs.build.outputs.version }}
 

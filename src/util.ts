@@ -65,6 +65,7 @@ export async function getLimits(api: types.IExtensionApi, token: string | undefi
 
         api.store.dispatch(setPluginLimits(result));
         log('debug', 'Rate limits fetched from the API', { result })
+        // console.log('Rate limits from API', result);
 
 
         return result;
@@ -95,6 +96,7 @@ export async function getLimits(api: types.IExtensionApi, token: string | undefi
           }
 
           api.store.dispatch(setPluginLimits(result));
+          // console.log('Rate limits (Fully limited)', result);
 
           log('warn', 'Could not get API limits due to rate limiting, assuming 0')
 
@@ -103,13 +105,15 @@ export async function getLimits(api: types.IExtensionApi, token: string | undefi
         else if (response.status === 401) {
           // Unauthorised, this means the OAuth session has expired!
           log('warn', 'Could not update API rate limits due to OAuth token having expired.');
+          // console.log('Rate limits not updated due to a 401 error', { stale: (api.getState().session as any).apiLimits });
           return (api.getState().session as any).apiLimits;
         }
         else throw new Error(`${response.status} - ${response.statusText ?? 'Unable to check API limits'}`);
     
       }
       catch(err) {
-        log('error', 'Unexpected error getting API limits', err)
+        log('error', 'Unexpected error getting API limits', err);
+        // console.log('Rate limits not updated due unexpected error', err);
         api.store.dispatch(setPluginLimits({}));
         throw err;
       }
@@ -126,8 +130,9 @@ const units: {[unit: Intl.RelativeTimeFormatUnit | string]: number} = {
 
 const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
   
-export const getRelativeTime = (d1: Date, d2 = new Date()): string => {
-    if (!d1) return null
+export const getRelativeTime = (d1: Date | undefined, d2 = new Date()): string => {
+    if (!d1) return '???';
+    if (typeof d1 === 'string') d1 = new Date(d1);
     let elapsed = d1.getTime() - d2.getTime()
 
     // "Math.abs" accounts for both "past" & "future" scenarios

@@ -7,6 +7,9 @@
     "bundle7z": "del game-elegos.7z && 7z a -t7z game-elegos.7z .\\dist\\*",
     "build": "npm run webpack && extractInfo"
   },
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "author": "Pickysaurus",
   "license": "GPL-3.0",
   "devDependencies": {
